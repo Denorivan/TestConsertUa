@@ -30,9 +30,9 @@ public class TestConcertUA {
 
     @AfterMethod
     public void tearDown() {
-//        if (driver != null) {
-//            driver.quit();
-//        }
+        if (driver != null) {
+            driver.quit();
+        }
     }
 
     @Test
@@ -41,16 +41,25 @@ public class TestConcertUA {
         driver.get("https://concert.ua/");
 
         // Обрати місто в хедері (Київ)
-//        driver.findElement(By.xpath("//div[@class=\"city-chooser-wrapper\"]")).click();
-//        driver.findElement(By.xpath("//a[@href=\"/en/kyiv\"]")).click();
+        driver.findElement(By.xpath("//div[@class=\"city-chooser-wrapper\"]")).click();
+        driver.findElement(By.xpath("//a[@href=\"/en/kyiv\"]")).click();
 
         // Перейти на сторінку “Концерти”
         driver.findElement(By.xpath("//nav/a[@href=\"/en/catalog/all-cities/concerts\"]")).click();
 
         // Фільтрувати подію за майданчиком та стилем
+        driver.findElement(By.id("venue"));
+        driver.findElement(By.xpath("//input[@value=\"vdn\"]"));
+        driver.findElement(By.xpath("(//button[text()='Apply'])[2]"));
+
+        driver.findElement(By.id("style"));
+        driver.findElement(By.xpath("//input[@value=\"rock\"]"));
+        driver.findElement(By.xpath("(//button[text()='Apply'])[2]"));
 
 
         // Перевірити, чи знайшло події за вказаним фільтром
+        List<WebElement> eventsList = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("event-item")));
+        Assert.assertFalse(eventsList.isEmpty(), "Не знайдено подій за вказаним фільтром");
 
     }
 
